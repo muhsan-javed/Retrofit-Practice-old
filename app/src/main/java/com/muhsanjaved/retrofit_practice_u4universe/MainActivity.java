@@ -16,12 +16,11 @@ import java.util.Map;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.http.POST;
 
 public class MainActivity extends AppCompatActivity {
     TextView output_textView;
-
     MyWebService myWebService;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,11 +37,80 @@ public class MainActivity extends AppCompatActivity {
 
         btnRunCode.setOnClickListener(view -> {
 
-            getComments();
+//            getComments();
            // getPosts();
+            //createPost();
+           // updatePost();
+            deletePost();
         });
 
 
+    }
+
+    private void deletePost() {
+        Call<Void> call = myWebService.deletePost(5);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()){
+                    output_textView.setText(String.valueOf(response.code()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void updatePost() {
+        Post post = new Post(15,"New Title", null);
+
+        Call<Post> postCall = myWebService.patchPost(4,post);
+        postCall.enqueue(new Callback<Post>() {
+            @Override
+            public void onResponse(Call<Post> call, Response<Post> response) {
+               if (response.isSuccessful()){
+                   output_textView.setText(String.valueOf(response.code()));
+                    showPost(response.body());
+               }
+            }
+
+            @Override
+            public void onFailure(Call<Post> call, Throwable t) {
+
+            }
+        });
+
+    }
+
+    private void createPost() {
+        Post post = new Post(1, "Post Title", "This is post body");
+
+//        Call<Post> postCall = myWebService.createPost(post);
+//        Call<Post> postCall = myWebService.createPost(3,"Post Title","This is Post..");
+
+        Map <String,String> postMap = new HashMap<>();
+        postMap.put("userId","22");
+        postMap.put("title","My Post Title");
+        postMap.put("body","this is my post ");
+        Call<Post> postCall = myWebService.createPost(postMap);
+
+        postCall.enqueue(new Callback<Post>() {
+            @Override
+            public void onResponse(Call<Post> call, Response<Post> response) {
+                if (response.isSuccessful()){
+                    output_textView.setText(String.valueOf(response.code()));
+                    showPost(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Post> call, Throwable t) {
+
+            }
+        });
     }
 
     private void getComments() {
@@ -106,7 +174,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showPost(Post post) {
-        output_textView.append("userId: "+post.getUserId() +"\n");
+        output_textView.append("\n userId: "+post.getUserId() +"\n");
         output_textView.append("id: "+post.getId() +"\n");
         output_textView.append("title: "+post.getTitle() +"\n");
         output_textView.append("body: "+post.getBody() +"\n\n");
