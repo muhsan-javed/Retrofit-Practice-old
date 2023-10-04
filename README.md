@@ -5,9 +5,7 @@
 - Retrofit provides a high-level interface for interacting with RESTful APIs, allowing developers to define the API endpoints as simple Java interfaces. It supports various serialization formats like JSON, XML, and Protocol Buffers, and makes it easy to customize the request headers and parameters.
 
 - The library also provides advanced features such as asynchronous request handling, request cancellation, and error handling. Retrofit also integrates seamlessly with other popular libraries like RxJava, Gson, and Moshi, making it a versatile tool for building robust and scalable Android apps that rely on remote APIs.
-![WhatsApp Image 2023-03-31 at 10 53 19]()
-![WhatsApp Image 2023-03-31 at 10 53 18]()
-![WhatsApp Image 2023-03-31 at 10 53 17]()
+
 
 <div style="display: flex; flex-direction: row;">
  <img src="https://github.com/muhsan-javed/Retrofit-Practice-old/assets/67718185/2db0af3d-c390-4db5-83fa-2c2b08efc1f0" width="375" height="667">
